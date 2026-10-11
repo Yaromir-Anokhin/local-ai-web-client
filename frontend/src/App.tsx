@@ -34,7 +34,7 @@ export default function App() {
     {
       id: 'init-1',
       role: 'assistant',
-      content: '👋 Привет! Я твой локальный AI-ассистент, работающий на локальной модели через Ollama.\n\nЗадай мне любой вопрос, попроси написать код или проанализировать данные!',
+      content: '👋 Hello! I am your local AI assistant running on your local model via Ollama.\n\nAsk me anything, have me write code, or analyze your data!',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -79,7 +79,7 @@ export default function App() {
       }
     } catch (err: any) {
       console.warn('Could not fetch models from Ollama:', err.message);
-      setConnectionError('Локальный сервер Ollama (localhost:11434) не найден или запускается. Используются стандартные названия моделей.');
+      setConnectionError('Local Ollama server (localhost:11434) not reachable or starting up. Falling back to default model options.');
       // Fallback defaults
       setModels(['llama3', 'llama3.2', 'mistral', 'phi3', 'qwen2.5-coder', 'deepseek-r1']);
     } finally {
@@ -217,7 +217,7 @@ export default function App() {
                   ...m,
                   content:
                     m.content +
-                    `\n\n⚠️ **Ошибка связи:** ${err.message || 'Не удалось получить ответ от LLM'}. Убедитесь, что Ollama запущена на localhost:11434.`,
+                    `\n\n⚠️ **Connection Error:** ${err.message || 'Failed to receive response from LLM'}. Please ensure Ollama is running on localhost:11434.`,
                 }
               : m
           )
@@ -331,7 +331,7 @@ export default function App() {
           <button
             onClick={handleClearHistory}
             disabled={streaming || messages.length === 0}
-            title="Очистить чат"
+            title="Clear Chat History"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -347,7 +347,7 @@ export default function App() {
             }}
           >
             <Trash2 size={14} />
-            <span>Очистить</span>
+            <span>Clear</span>
           </button>
         </div>
       </header>
@@ -446,7 +446,7 @@ export default function App() {
                       ) : (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)' }}>
                           <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--accent-cyan)', animation: 'pulse 1.2s infinite' }} />
-                          <span style={{ fontSize: '0.85rem' }}>Генерирую ответ...</span>
+                          <span style={{ fontSize: '0.85rem' }}>Generating response...</span>
                         </div>
                       )}
                     </div>
@@ -467,7 +467,7 @@ export default function App() {
                   {!isUser && msg.content && (
                     <button
                       onClick={() => handleCopy(msg.id, msg.content)}
-                      title="Копировать сообщение"
+                      title="Copy message"
                       style={{
                         background: 'none',
                         border: 'none',
@@ -480,7 +480,7 @@ export default function App() {
                       }}
                     >
                       {copiedId === msg.id ? <Check size={12} color="#10b981" /> : <Copy size={12} />}
-                      {copiedId === msg.id ? 'Скопировано' : 'Копировать'}
+                      {copiedId === msg.id ? 'Copied' : 'Copy'}
                     </button>
                   )}
                 </div>
@@ -537,7 +537,7 @@ export default function App() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={`Отправить сообщение модели ${selectedModel}... (Enter для отправки, Shift+Enter для новой строки)`}
+              placeholder={`Send a message to ${selectedModel}... (Enter to send, Shift+Enter for newline)`}
               rows={Math.min(5, Math.max(1, input.split('\n').length))}
               style={{
                 flex: 1,
@@ -573,7 +573,7 @@ export default function App() {
                 }}
               >
                 <StopCircle size={16} />
-                <span>Стоп</span>
+                <span>Stop</span>
               </button>
             ) : (
               <button
@@ -609,7 +609,7 @@ export default function App() {
               marginTop: '0.5rem',
             }}
           >
-            Работает полностью локально. Данные не отправляются на сторонние облачные серверы.
+            Runs 100% locally. No conversation data or prompts are sent to external cloud servers.
           </div>
         </div>
       </footer>
